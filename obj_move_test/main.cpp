@@ -48,7 +48,7 @@ public:
     }
 };
 
-void PrintMoveTest(const MoveTest& mt) {
+void PrintMoveTest(MoveTest mt) {
     if(mt.getPtr() == nullptr) {
         cout << __FUNCTION__ << ": " << "empty" << endl;
     } else {
@@ -83,25 +83,25 @@ int main(int argc, char* argv[]) {
     char str12[] = "temporary object12";
     char str123[] = "temporary object123";
     
-    MoveTest mt = {str, sizeof(str)};
-    cout << "direct: " << mt.getPtr() << " " << mt.getNum() << endl;
-    PrintMoveTest(mt);
+    // MoveTest mt = {str, sizeof(str)};
+    // cout << "direct: " << mt.getPtr() << " " << mt.getNum() << endl;
+    // PrintMoveTest(mt);
     
     PrintMoveTest(MoveTest(str1, sizeof(str1)));
     
-    MoveTest mt1 = CreateRandomMoveTest();
-    PrintMoveTest(mt1);
+    // MoveTest mt1 = CreateRandomMoveTest();
+    // PrintMoveTest(mt1);
 
-    MoveTest mt2 = { str2, sizeof(str2) };
-    PrintMoveTest(mt2);
+    // MoveTest mt2 = { str2, sizeof(str2) };
+    // PrintMoveTest(mt2);
     
     PrintMoveTest({ str12, sizeof(str12) });
 
-    MoveTest& mt3 = CreateRandomMoveTest().concat(mt).concat({ str123, sizeof(str123) });
-    PrintMoveTest(mt3);
+    // MoveTest& mt3 = CreateRandomMoveTest().concat(mt).concat({ str123, sizeof(str123) });
+    // PrintMoveTest(mt3);
 
-    MoveTest mt4 = move(CreateRandomMoveTest().concat(mt1).concat(mt2));
-    PrintMoveTest(mt4);
+    // MoveTest mt4 = move(CreateRandomMoveTest().concat(mt1).concat(mt2));
+    // PrintMoveTest(mt4);
 
     cout << "finished" << endl;
 }
