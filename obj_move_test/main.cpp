@@ -19,9 +19,15 @@ public:
     }
 
     MoveTest(char* ptr, int num) : _num(num) {
-        cout << __FUNCTION__ << "(init) called. " << this << " " << ptr << " " << num << endl;
-        _ptr = new char[num];
-        copy_n(ptr, num, _ptr);
+        cout << __FUNCTION__ << "(init) called. " << this << " ";
+
+        if(ptr != nullptr && num > 0) {
+            cout << ptr << " " << num << endl;
+            _ptr = new char[num];
+            copy_n(ptr, num, _ptr);
+        } else {
+            cout << "empty" << endl;
+        }
     }
 
     ~MoveTest() {
@@ -34,21 +40,24 @@ public:
     }
 
     MoveTest& concat(const MoveTest& obj) {
-        cout << __FUNCTION__ << " called. " << _ptr << " " << _num << " + " << obj._ptr << " " << obj._num << endl;
+        cout << __FUNCTION__ << " called. " << (_ptr == nullptr ? "empty" : _ptr) << " " << _num << " + " << obj._ptr << " " << obj._num << endl;
 
         char* temp_ptr  = new char[_num + obj._num];
         
-        copy_n(_ptr, _num, temp_ptr);
-        temp_ptr[_num - 1] = ' ';
+        if(_ptr != nullptr) {
+            copy_n(_ptr, _num, temp_ptr);
+            temp_ptr[_num - 1] = ' ';
+            delete _ptr;
+        }
+
         copy_n(obj._ptr, obj._num, temp_ptr + _num);
 
         _num += obj._num;
-        delete _ptr;
         _ptr = temp_ptr;
     }
 };
 
-void PrintMoveTest(MoveTest mt) {
+void PrintMoveTest(const MoveTest& mt) {
     if(mt.getPtr() == nullptr) {
         cout << __FUNCTION__ << ": " << "empty" << endl;
     } else {
@@ -58,21 +67,26 @@ void PrintMoveTest(MoveTest mt) {
 
 MoveTest CreateRandomMoveTest() {
     std::random_device r;
- 
     std::default_random_engine e1(r());
-    std::uniform_int_distribution<int> uniform_dist(10, 20);
-    int num = uniform_dist(e1);
-    vector<char> str;
+    std::uniform_int_distribution<int> uniform_dist(8, 15);
     std::uniform_int_distribution<char> uniform_dist1('a', 'z');
+    vector<char> str;
+    MoveTest mt = {nullptr, 0};
 
-    str.resize(num);
-    for(int i = 0; i < num - 1; i++) {
-        str[i] = uniform_dist1(e1);
+    for(size_t i = 0; i < 3; i++)
+    {
+        int num = uniform_dist(e1);
+
+        str.resize(num);
+        for(int i = 0; i < num - 1; i++) {
+            str[i] = uniform_dist1(e1);
+        }
+
+        str[num - 1] = '\0';
+        mt.concat({&str[0], num});
     }
 
-    str[num - 1] = '\0';
-
-    return MoveTest(&str[0], num);
+    return mt;
 }
 
 int main(int argc, char* argv[]) {
@@ -89,8 +103,8 @@ int main(int argc, char* argv[]) {
     
     PrintMoveTest(MoveTest(str1, sizeof(str1)));
     
-    // MoveTest mt1 = CreateRandomMoveTest();
-    // PrintMoveTest(mt1);
+    MoveTest mt1 = CreateRandomMoveTest();
+    PrintMoveTest(mt1);
 
     // MoveTest mt2 = { str2, sizeof(str2) };
     // PrintMoveTest(mt2);
