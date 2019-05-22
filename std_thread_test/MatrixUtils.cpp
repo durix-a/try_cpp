@@ -24,6 +24,7 @@ void MatrixMultiplier::operator()() {
 }
 
 void MatrixMultiplier::multiply(const Matrix& transposed) {
+    result = move(Matrix(transposed.getRows(), multiplied.getRows()));
     int* a_values = multiplied.getValues();
     int* b_values = transposed.getValues();
     int* c_values = result.getValues();
@@ -56,25 +57,24 @@ Matrix MatrixUtils::multiplyParalel(const Matrix& a, const Matrix& b, int thread
         throw std::invalid_argument("wrong matrix dimentions");
     }
 
-    Matrix c(b.getCols(), a.getRows());
     Matrix transpose = b;
     thread* multiplier[threadsCount];
     int rowsPerThread = a.getRows() / threadsCount;
 
     transpose.transpose();
-    MatrixMultiplier mm(a, transpose, c, true);
+    MatrixMultiplier mm(a, transpose, true);
 
     int i = 0;
     for(size_t i = 0; i < (threadsCount - 1); i++)
     {
         mm.setFromRow(rowsPerThread * i);
         mm.setToRow(rowsPerThread * (i + 1));
-        multiplier[i] = new thread(mm);
+        multiplier[i] = new thread(ref(mm));
     }
 
     mm.setFromRow(rowsPerThread * (threadsCount - 1));
     mm.setToRow(a.getRows());
-    multiplier[threadsCount - 1] = new thread(mm);
+    multiplier[threadsCount - 1] = new thread(ref(mm));
     
     for(size_t i = 0; i < threadsCount; i++)
     {
@@ -82,7 +82,7 @@ Matrix MatrixUtils::multiplyParalel(const Matrix& a, const Matrix& b, int thread
         delete multiplier[i];
     }
 
-    return c;
+    return move(mm.getResult());
 }
 
 Matrix MatrixUtils::multiply(const Matrix& a, const Matrix& b) {

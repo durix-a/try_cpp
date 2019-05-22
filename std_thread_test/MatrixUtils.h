@@ -29,6 +29,11 @@ public:
         _values.reset(new int[_cols * _rows]);
         std::copy_n(m.getValues(), _cols * _rows, getValues());
     }
+    void operator=(Matrix&& m) {
+        _cols = m._cols;
+        _rows = m._rows;
+        _values = std::move(m._values);
+    }
     bool operator==(const Matrix& m) {
         if(std::memcmp(m.getValues(), getValues(), _cols * _rows) == 0 && _cols == m._cols && _rows == m._rows) {
             return true;
@@ -46,7 +51,7 @@ public:
 class MatrixMultiplier {
     const Matrix& multiplied;
     const Matrix& multiplier;
-    Matrix& result;
+    Matrix result;
     int fromRow = 0;
     int toRow = 0;
     bool isMultiplierTransposed;
@@ -56,8 +61,8 @@ class MatrixMultiplier {
     void multiply(const Matrix& transposed);
 
 public:
-    MatrixMultiplier(const Matrix& a, const Matrix& b, Matrix& c, bool transposed = false) : 
-                    multiplied(a), multiplier(b), result(c), isMultiplierTransposed(transposed) {}
+    MatrixMultiplier(const Matrix& a, const Matrix& b, bool transposed = false) : 
+                    multiplied(a), multiplier(b), isMultiplierTransposed(transposed) {}
     void operator()();
     void setFromRow(int row) { fromRow = row; }
     void setToRow(int row) { toRow = row; }

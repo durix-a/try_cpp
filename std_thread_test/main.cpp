@@ -15,8 +15,8 @@ int main(int argc, char* argv[]) {
 }
 
 void MatrixOperations() {
-    PerfTest();
-    // ValidityTest();
+    // PerfTest();
+    ValidityTest();
 }
 
 void PerfTest() {
@@ -36,11 +36,8 @@ void PerfTest() {
     Matrix g = MatrixUtils::random(500, 2000);
     Matrix h = MatrixUtils::random(2000, 500);
 
-    Matrix f(e.getCols(), d.getRows());
-    Matrix i(h.getCols(), g.getRows());
-
-    MatrixMultiplier mm1(d, e, f);
-    MatrixMultiplier mm2(g, h, i);
+    MatrixMultiplier mm1(d, e);
+    MatrixMultiplier mm2(g, h);
 
     // c_start = clock();
     // thread th1(ref(mm1));
@@ -81,29 +78,31 @@ void ValidityTest() {
     // cout << "-----------------------" << endl;
     // MatrixUtils::PrintMatrix(t);
     // cout << "-----------------------" << endl;
-    // MatrixUtils::PrintMatrix(d);
-    // cout << "-----------------------" << endl;
-    // MatrixUtils::PrintMatrix(e);
-    // cout << "-----------------------" << endl;
+    MatrixUtils::PrintMatrix(d);
+    cout << "-----------------------" << endl;
+    MatrixUtils::PrintMatrix(e);
+    cout << "-----------------------" << endl;
 
-    Matrix c = MatrixUtils::multiplyParalel(d, e, 1);
-    Matrix f = MatrixUtils::multiply(d, e);
-    cout << "d * e: " << (c == f ? "c == f" : "c != f") << endl;
+    Matrix c;
+    Matrix f;
+    // c = MatrixUtils::multiplyParalel(d, e, 1);
+    // f = MatrixUtils::multiply(d, e);
+    // cout << "d * e: " << (c == f ? "c == f" : "c != f") << endl;
     
-    c = MatrixUtils::multiplyParalel(e, d, 1);
+    // c = MatrixUtils::multiplyParalel(e, d, 1);
     f = MatrixUtils::multiply(e, d);
-    cout  << "e * d: " << (c == f ? "c == f" : "c != f") << endl;
+    // cout  << "e * d: " << (c == f ? "c == f" : "c != f") << endl;
     
     c = MatrixUtils::multiplyParalel(e, d, 2);
     cout  << "e * d x2: " << (c == f ? "c == f" : "c != f") << endl;
 
-    c = MatrixUtils::multiplyParalel(a, b, 1);
-    f = MatrixUtils::multiply(a, b);
-    cout  << "a * b: " << (c == f ? "c == f" : "c != f") << endl;
+    // c = MatrixUtils::multiplyParalel(a, b, 1);
+    // f = MatrixUtils::multiply(a, b);
+    // cout  << "a * b: " << (c == f ? "c == f" : "c != f") << endl;
     
-    c = MatrixUtils::multiplyParalel(b, a, 1);
-    f = MatrixUtils::multiply(b, a);
-    cout  << "b * a: " << (c == f ? "c == f" : "c != f") << endl;
-    // MatrixUtils::PrintMatrix(c);
-    // MatrixUtils::PrintMatrix(f);
+    // c = MatrixUtils::multiplyParalel(b, a, 1);
+    // f = MatrixUtils::multiply(b, a);
+    // cout  << "b * a: " << (c == f ? "c == f" : "c != f") << endl;
+    MatrixUtils::PrintMatrix(c);
+    MatrixUtils::PrintMatrix(f);
 }
