@@ -55,7 +55,6 @@ class MatrixMultiplier {
     int fromRow = 0;
     int toRow = 0;
     bool isMultiplierTransposed;
-    long double time_elapsed_ms;
 
 
     void multiply(const Matrix& transposed);
@@ -67,7 +66,6 @@ public:
     void setFromRow(int row) { fromRow = row; }
     void setToRow(int row) { toRow = row; }
     Matrix& getResult() { return result; }
-    long double getTimeElapsedMs() { return time_elapsed_ms; }
 };
 
 class MatrixUtils {

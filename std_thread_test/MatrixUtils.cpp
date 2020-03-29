@@ -2,15 +2,10 @@
 #include <stdexcept>
 #include <random>
 #include <thread>
-#include <ctime>
 
 using namespace std;
 
 void MatrixMultiplier::operator()() {
-    clock_t c_start;
-    clock_t c_end;
-
-    c_start = clock();
     if(isMultiplierTransposed) {
         multiply(multiplier);
     } else {
@@ -19,8 +14,6 @@ void MatrixMultiplier::operator()() {
         transposed.transpose();
         multiply(transposed);
     }
-    c_end = clock();
-    time_elapsed_ms = 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC;
 }
 
 void MatrixMultiplier::multiply(const Matrix& transposed) {

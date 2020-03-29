@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <ctime>
 #include <thread>
+#include <chrono>
 #include "MatrixUtils.h"
 
 using namespace std;
@@ -15,47 +16,42 @@ int main(int argc, char* argv[]) {
 }
 
 void MatrixOperations() {
-    // PerfTest();
-    ValidityTest();
+    PerfTest();
+    // ValidityTest();
 }
 
 void PerfTest() {
-    clock_t c_start;
-    clock_t c_end;
-    long double time_elapsed_ms;
     // Matrix d = MatrixUtils::random(100, 300);
     // Matrix e = MatrixUtils::random(300, 100);
     // Matrix g = MatrixUtils::random(100, 300);
     // Matrix h = MatrixUtils::random(300, 100);
-    // Matrix d = MatrixUtils::random(1000, 3000);
-    // Matrix e = MatrixUtils::random(3000, 1000);
-    // Matrix g = MatrixUtils::random(1000, 3000);
-    // Matrix h = MatrixUtils::random(3000, 1000);
-    Matrix d = MatrixUtils::random(500, 2000);
-    Matrix e = MatrixUtils::random(2000, 500);
-    Matrix g = MatrixUtils::random(500, 2000);
-    Matrix h = MatrixUtils::random(2000, 500);
+    Matrix d = MatrixUtils::random(1000, 3000);
+    Matrix e = MatrixUtils::random(3000, 1000);
+    Matrix g = MatrixUtils::random(1000, 3000);
+    Matrix h = MatrixUtils::random(3000, 1000);
+    // Matrix d = MatrixUtils::random(500, 2000);
+    // Matrix e = MatrixUtils::random(2000, 500);
+    // Matrix g = MatrixUtils::random(500, 2000);
+    // Matrix h = MatrixUtils::random(2000, 500);
 
     MatrixMultiplier mm1(d, e);
     MatrixMultiplier mm2(g, h);
 
-    // c_start = clock();
-    // thread th1(ref(mm1));
-    // thread th2(ref(mm2));
-    // th1.join();
-    // th2.join();
-    // c_end = clock();
-    // time_elapsed_ms = 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC;
-    // cout << "CPU time used(joined): " << time_elapsed_ms << " ms\n";
-    // cout << "CPU time used(mm1): " << mm1.getTimeElapsedMs() << " ms\n";
-    // cout << "CPU time used(mm2): " << mm2.getTimeElapsedMs() << " ms\n";
+    auto start_time = std::chrono::system_clock::now();
+    thread th1(ref(mm1));
+    thread th2(ref(mm2));
+    th1.join();
+    th2.join();
+    auto end_time = std::chrono::system_clock::now();
+    std::chrono::duration<double> time_elapsed_ms = end_time - start_time;
+    cout << "CPU time used(joined): " << time_elapsed_ms.count() << " s\n";
 
-    c_start = clock();
+    start_time = std::chrono::system_clock::now();
     mm1();
     mm2();
-    c_end = clock();
-    time_elapsed_ms = 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC;
-    cout << "CPU time used(2): " << time_elapsed_ms << " ms\n";
+    end_time = std::chrono::system_clock::now();
+    time_elapsed_ms = end_time - start_time;
+    cout << "CPU time used(2): " << time_elapsed_ms.count() << " s\n";
 }
 
 void ValidityTest() {
