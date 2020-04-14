@@ -1,5 +1,9 @@
 #include "Dictionary.h"
 
+namespace WordsLookup
+{
+;
+
 const Dictionary::DictionaryContext Dictionary::IsWordFirstCharacterExist(wchar_t character) const
 {
 	return IsWordCharacterExist(&_baseDictionaryLevel, character);
@@ -53,4 +57,6 @@ void Dictionary::FillDictionary(const std::vector<std::wstring>& allWords)
 
 		currentDictionaryLevel->isWordEnd = true;
 	}
+}
+
 }

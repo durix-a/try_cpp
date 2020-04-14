@@ -5,6 +5,10 @@
 #include <memory>
 #include <unordered_map>
 
+namespace WordsLookup
+{
+;
+
 class Dictionary
 {
 public:
@@ -28,3 +32,4 @@ private:
 	DictionaryLevel _baseDictionaryLevel;
 };
 
+}

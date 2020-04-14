@@ -2,6 +2,7 @@
 #include "../WordsLookup/Dictionary.h"
 
 using namespace std;
+using namespace WordsLookup;
 
 class WordsDictionaryTest : public testing::Test
 {

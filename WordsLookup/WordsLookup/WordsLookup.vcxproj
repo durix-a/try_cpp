@@ -144,10 +144,12 @@
   <ItemGroup>
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="WordsFinder.cpp" />
+    <ClCompile Include="WordsFinderPyInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="WordsFinder.h" />
+    <ClInclude Include="WordsFinderPyInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

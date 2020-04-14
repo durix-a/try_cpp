@@ -5,6 +5,10 @@
 
 #define CHARACTERS_BOARD_SIZE 5
 
+namespace WordsLookup
+{
+;
+
 struct WordCharacter
 {
 	WordCharacter() = default;
@@ -33,3 +37,5 @@ private:
 };
 
 std::wostream& operator<<(std::wostream& out, const std::vector<WordCharacter>& word);
+
+}

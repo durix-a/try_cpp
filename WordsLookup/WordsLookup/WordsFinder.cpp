@@ -3,6 +3,10 @@
 
 using namespace std;
 
+namespace WordsLookup
+{
+;
+
 void WordsFinder::FindWords(const wchar_t* charactersBoard, const Dictionary* dictionary)
 {
 	_charactersBoard = charactersBoard;
@@ -84,4 +88,6 @@ wostream& operator<<(wostream& out, const std::vector<WordCharacter>& word)
 	}
 
 	return out;
+}
+
 }

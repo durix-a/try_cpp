@@ -3,10 +3,14 @@
 #include <iostream>
 
 using namespace std;
+using namespace WordsLookup;
 
-bool operator==(const WordCharacter& compareWord, const WordCharacter& compareWith)
+namespace WordsLookup
 {
-    return (compareWord.character == compareWith.character && compareWord.boardX == compareWith.boardX && compareWord.boardY == compareWith.boardY);
+    bool operator==(const WordCharacter& compareWord, const WordCharacter& compareWith)
+    {
+        return (compareWord.character == compareWith.character && compareWord.boardX == compareWith.boardX && compareWord.boardY == compareWith.boardY);
+    }
 }
 
 class WordsFinderTest : public testing::Test
