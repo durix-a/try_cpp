@@ -16,10 +16,10 @@ using namespace PyInterface;
 int main(int argc, char* argv[])
 {
 	WordsFinder finder("C:\\Users\\durix\\source\\python\\tesserocr\\dictionary\\zdf-utf8.txt", L'а');
-	const wchar_t* charactersBoard[]{ L"кавьо",
-		L"баппс",
-		L"анлет",
-		L"жиаер",
+	const wchar_t* charactersBoard{ L"кавьо"
+		L"баппс"
+		L"анлет"
+		L"жиаер"
 		L"снеме" };
 
 	vector<vector<WordCharacter>> foundWords = finder.FindWords(charactersBoard);

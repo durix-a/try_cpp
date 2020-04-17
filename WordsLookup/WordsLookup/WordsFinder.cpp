@@ -9,6 +9,7 @@ namespace WordsLookup
 
 void WordsFinder::FindWords(const wchar_t* charactersBoard, const Dictionary* dictionary)
 {
+	_foundWords.clear();
 	_charactersBoard = charactersBoard;
 	_dictionary = dictionary;
 

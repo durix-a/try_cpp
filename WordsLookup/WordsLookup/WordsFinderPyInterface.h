@@ -20,7 +20,7 @@ class WordsFinder
 {
 public:
 	WordsFinder(const char* filePath, wchar_t alphabetFirstCharacter);
-	std::vector<std::vector<WordCharacter>> FindWords(const wchar_t** charactersBoard);
+	std::vector<std::vector<WordCharacter>> FindWords(const wchar_t* charactersBoard);
 
 private:
 	void createDictionaryFromFile(const char* filePath);

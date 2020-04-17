@@ -19,16 +19,9 @@ WordsFinder::WordsFinder(const char* filePath, wchar_t alphabetFirstCharacter) :
 	createDictionaryFromFile(filePath);
 }
 
-vector<vector<WordCharacter>> WordsFinder::FindWords(const wchar_t** charactersBoard)
+vector<vector<WordCharacter>> WordsFinder::FindWords(const wchar_t* charactersBoard)
 {
-	wchar_t charactersBoardFlat[CHARACTERS_BOARD_SIZE][CHARACTERS_BOARD_SIZE]{ 0 };
-
-	for (int i = 0; i < CHARACTERS_BOARD_SIZE; i++)
-	{
-		memcpy(charactersBoardFlat[i], charactersBoard[i], CHARACTERS_BOARD_SIZE * sizeof(wchar_t));
-	}
-
-	_wordsFinder.FindWords((wchar_t*)charactersBoardFlat, &_dictionary);
+	_wordsFinder.FindWords(charactersBoard, &_dictionary);
 
 	vector<vector<WordCharacter>> foundWords;
 	for (auto word : _wordsFinder.GetFoundWords())
